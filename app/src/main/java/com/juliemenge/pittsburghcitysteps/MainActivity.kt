@@ -68,11 +68,9 @@ class MainActivity : AppCompatActivity() {
                         Log.d(javaClass.simpleName, "Number: " + i + ", Neighborhood: " + step.neighborhood + ", Name: " + step.name + ", Material: " + step.material + ", Length: " + step.length)
                     }
 
-                    //TODO: why is recyclerview cutting off last item in larger lists
                     //set up the recyclerview to display list of steps
                     val adapter = RecyclerAdapter(stepList)
                     recyclerView.adapter = adapter
-
                     }
             }
         }
@@ -84,4 +82,3 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
         }
     }
-
