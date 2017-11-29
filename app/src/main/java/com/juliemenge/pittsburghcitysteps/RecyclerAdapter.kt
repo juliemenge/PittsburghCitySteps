@@ -23,7 +23,7 @@ class RecyclerAdapter(val stepList: ArrayList<Step>) : RecyclerView.Adapter<Recy
         return stepList.size
     }
 
-    //the class is hodling the list view
+    //the class is holding the list view
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bindItems(step: Step) {
