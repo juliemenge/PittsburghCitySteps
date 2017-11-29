@@ -29,8 +29,12 @@ class RecyclerAdapter(val stepList: ArrayList<Step>) : RecyclerView.Adapter<Recy
         fun bindItems(step: Step) {
             val textViewName = itemView.findViewById<TextView>(R.id.stepName)
             val textViewNeighborhood  = itemView.findViewById<TextView>(R.id.stepNeighborhood)
+            val textViewMaterial  = itemView.findViewById<TextView>(R.id.stepMaterial)
+            val textViewLength  = itemView.findViewById<TextView>(R.id.stepLength)
             textViewName.text = step.name
             textViewNeighborhood.text = step.neighborhood
+            textViewMaterial.text = step.material
+            textViewLength.text = step.length.toString()
         }
     }
 }

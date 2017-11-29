@@ -7,7 +7,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.widget.LinearLayout
-import com.github.nitrico.lastadapter.LastAdapter
+//import com.github.nitrico.lastadapter.LastAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
@@ -16,15 +16,52 @@ import org.json.JSONObject
 import java.util.*
 import kotlin.collections.ArrayList
 import android.R.array
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import java.util.Arrays.asList
 
 
 
 class MainActivity : AppCompatActivity() {
 
+    val neighborhoods = arrayOf("Allentown", "Arlington", "Banksville", "Bedford Dwellings", "Beechview" +
+            "Beltzhoover", "Bloomfield", "Bluff", "Bon Air", "Brighton Heights", "Brookline" +
+            "California-Kirkbride", "Carrick", "Central Lawrenceville", "Central Northside" +
+            "Central Oakland", "Chartiers City", "Crafton Heights", "Crawford-Roberts", "Duquesne Heights" +
+            "East Allegheny", "East Carnegie", "East Hills", "Elliott", "Esplen", "Fineview", "Garfield" +
+            "Glen Hazel", "Greenfield", "Hazelwood", "Highland Park", "Homewood North", "Knoxville" +
+            "Larimer", "Lincoln-Lemington-Belmar", "Lincoln Place", "Lower Lawrenceville" +
+            "Marhsall-Shadeland", "Middle Hill", "Morningside", "Mount Oliver Borough", "Mount Washington" +
+            "Mt. Oliver", "North Oakland", "Oakwood", "Overbrook", "Perry North", "Perry South" +
+            "Point Breeze", "Polish Hill", "Ridgemont", "Shadyside", "Sheraden", "South Oakland" +
+            "South Side Flats", "South Side Slopes", "Spring Garden", "Spring Hill-City View" +
+            "Squirrel Hill North", "Squirrel Hill South", "Stanton Heights", "St. Clair", "Strip District" +
+            "Terrace Village", "Troy Hill", "Upper Hill", "Upper Lawrenceville", "West End" +
+            "West Oakland", "Westwood", "Windgap")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        //spinner to select neighborhood
+        val aa: ArrayAdapter<String> = ArrayAdapter(this, android.R.layout.simple_spinner_item, neighborhoods)
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        neighborhoodSpinner.adapter = aa
+
+        //base list of recycling dates based on chosen neighborhood
+        neighborhoodSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                val rawNeighborhoodChoice = neighborhoodSpinner.selectedItem.toString()
+                val neighborhood = "'" + rawNeighborhoodChoice + "'"
+            }
+        }
+
+
 
         //getting recyclerview from xml
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
@@ -34,11 +71,11 @@ class MainActivity : AppCompatActivity() {
 
 
         val rawNeighborhoodChoice = "Upper Lawrenceville" //TODO: will probably get this from a spinner, adding leading and trailing apostrophes below
-        val neighborhoodChoice = "'" + rawNeighborhoodChoice + "'"
+        val neighborhood = "'" + rawNeighborhoodChoice + "'"
 
         async(UI) {
             val network = NetworkApi() //pass in user selected neighborhood
-            val data = bg { network.getDataFromServer(neighborhoodChoice) }
+            val data = bg { network.getDataFromServer(neighborhood) }
             val useableData = data.await()
 
             val allthedata = JSONObject(useableData) //get one giant blob of json data
