@@ -19,7 +19,7 @@ import android.widget.ArrayAdapter
 class MainActivity : AppCompatActivity() {
 
     //neighborhoods to choose from for spinner
-    val neighborhoods = arrayOf("Allentown", "Arlington", "Banksville", "Bedford Dwellings", "Beechview", "Beltzhoover", "Bloomfield", "Bluff", "Bon Air", "Brighton Heights", "Brookline", "California-Kirkbride", "Carrick", "Central Lawrenceville", "Central Northside", "Central Oakland", "Chartiers City", "Crafton Heights", "Crawford-Roberts", "Duquesne Heights", "East Allegheny", "East Carnegie", "East Hills", "Elliott", "Esplen", "Fineview", "Garfield", "Glen Hazel", "Greenfield", "Hazelwood", "Highland Park", "Homewood North", "Knoxville", "Larimer", "Lincoln-Lemington-Belmar", "Lincoln Place", "Lower Lawrenceville", "Marhsall-Shadeland", "Middle Hill", "Morningside", "Mount Oliver Borough", "Mount Washington", "Mt. Oliver", "North Oakland", "Oakwood", "Overbrook", "Perry North", "Perry South", "Point Breeze", "Polish Hill", "Ridgemont", "Shadyside", "Sheraden", "South Oakland", "South Side Flats", "South Side Slopes", "Spring Garden", "Spring Hill-City View", "Squirrel Hill North", "Squirrel Hill South", "Stanton Heights", "St. Clair", "Strip District", "Terrace Village", "Troy Hill", "Upper Hill", "Upper Lawrenceville", "West End", "West Oakland", "Westwood", "Windgap")
+    private val neighborhoods = arrayOf("Allentown", "Arlington", "Banksville", "Bedford Dwellings", "Beechview", "Beltzhoover", "Bloomfield", "Bluff", "Bon Air", "Brighton Heights", "Brookline", "California-Kirkbride", "Carrick", "Central Lawrenceville", "Central Northside", "Central Oakland", "Chartiers City", "Crafton Heights", "Crawford-Roberts", "Duquesne Heights", "East Allegheny", "East Carnegie", "East Hills", "Elliott", "Esplen", "Fineview", "Garfield", "Glen Hazel", "Greenfield", "Hazelwood", "Highland Park", "Homewood North", "Knoxville", "Larimer", "Lincoln-Lemington-Belmar", "Lincoln Place", "Lower Lawrenceville", "Marhsall-Shadeland", "Middle Hill", "Morningside", "Mount Oliver Borough", "Mount Washington", "Mt. Oliver", "North Oakland", "Oakwood", "Overbrook", "Perry North", "Perry South", "Point Breeze", "Polish Hill", "Ridgemont", "Shadyside", "Sheraden", "South Oakland", "South Side Flats", "South Side Slopes", "Spring Garden", "Spring Hill-City View", "Squirrel Hill North", "Squirrel Hill South", "Stanton Heights", "St. Clair", "Strip District", "Terrace Village", "Troy Hill", "Upper Hill", "Upper Lawrenceville", "West End", "West Oakland", "Westwood", "Windgap")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,45 +40,32 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                val rawNeighborhoodChoice = neighborhoodSpinner.selectedItem.toString()
-                val neighborhood = "'" + rawNeighborhoodChoice + "'"
+                // Review: Use string templates
+                val neighborhood = "'${neighborhoodSpinner.selectedItem}'"
 
                 async(UI) {
                     val network = NetworkApi()
                     val data = bg { network.getDataFromServer(neighborhood) } //make network call and pass in user selected neighborhood
-                    val useableData = data.await()
-
-                    val allthedata = JSONObject(useableData) //get one giant blob of json data
-                    val result = allthedata.getJSONObject("result") //create a json blob of just the result data
-                    val records = result.getJSONArray("records") //get an array of the steps records
-
-                    val arraySize = records.length() //size of the arraylist to store steps
-
-                    val stepList = ArrayList<Step>(arraySize) //empty arraylist where steps will be stored
-
-                    //iterate through json data and create arraylist of steps objects
-                    for (i in 0..arraySize-1) {
-                        val jsonStep = records.getJSONObject(i) //do stuff with the first step
-                        val step = Step() //create a new step object
-                        step.neighborhood = jsonStep.getString("neighborhood")
-                        step.name = jsonStep.getString("name")
-                        step.material = jsonStep.getString("material")
-                        step.length = jsonStep.getInt("length")
-                        stepList.add(step)
-                        Log.d(javaClass.simpleName, "Number: " + i + ", Neighborhood: " + step.neighborhood + ", Name: " + step.name + ", Material: " + step.material + ", Length: " + step.length)
-                    }
+                    val stepList = data.await()
 
                     //set up the recyclerview to display list of steps
                     val adapter = RecyclerAdapter(stepList)
                     recyclerView.adapter = adapter
-                    }
+
+                    //clicky code
+                    
+                    //end clicky code
+                }
             }
         }
 
         //getting recyclerview from xml
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+
+        // Review: Not needed. The Android extensions allow you reference components directly without needing findViewById
+        // val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
 
         //adding a layoutmanager
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
-        }
+
     }
+}

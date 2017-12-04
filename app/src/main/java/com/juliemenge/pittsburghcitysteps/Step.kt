@@ -1,9 +1,5 @@
 package com.juliemenge.pittsburghcitysteps
 
-class Step {
-    var neighborhood: String? = null
-    var name: String? = null
-    //var image: String? = null
-    var material: String? = null
-    var length: Int? = null
-}
+// Review: Remove nulls (try and avoid them where not necessary). Converted to Data Class with immutable properties
+//class Step(val neighborhood: String, val name: String, val material: String, val length: Int)
+class Step(val neighborhood: String, val name: String, val material: String, val length: Int, val image: String)

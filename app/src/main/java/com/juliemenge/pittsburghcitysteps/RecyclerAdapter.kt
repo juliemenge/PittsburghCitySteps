@@ -1,11 +1,16 @@
 package com.juliemenge.pittsburghcitysteps
+import android.content.DialogInterface
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import kotlinx.android.synthetic.main.recyclerview_item_row.view.*
 
-class RecyclerAdapter(val stepList: ArrayList<Step>) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+
+class RecyclerAdapter(val stepList: List<Step>) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+//class RecyclerAdapter(val stepList: List<Step>, val listener: (Step) -> Unit) : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
+
 
     //this method is returning the view for each item in the list
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerAdapter.ViewHolder {
@@ -16,6 +21,7 @@ class RecyclerAdapter(val stepList: ArrayList<Step>) : RecyclerView.Adapter<Recy
     //this method is binding the data on the list
     override fun onBindViewHolder(holder: RecyclerAdapter.ViewHolder, position: Int) {
         holder.bindItems(stepList[position])
+        //holder.bindItems(stepList[position], listener)
     }
 
     //this method is giving the size of the list
@@ -25,16 +31,16 @@ class RecyclerAdapter(val stepList: ArrayList<Step>) : RecyclerView.Adapter<Recy
 
     //the class is holding the list view
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         fun bindItems(step: Step) {
-            val textViewName = itemView.findViewById<TextView>(R.id.stepName)
-            val textViewNeighborhood  = itemView.findViewById<TextView>(R.id.stepNeighborhood)
-            val textViewMaterial  = itemView.findViewById<TextView>(R.id.stepMaterial)
-            val textViewLength  = itemView.findViewById<TextView>(R.id.stepLength)
-            textViewName.text = step.name
-            textViewNeighborhood.text = step.neighborhood
-            textViewMaterial.text = step.material
-            textViewLength.text = step.length.toString()
+        //fun bindItems(step: Step, listener: (Step) -> Unit) = with(itemView) {
+            // Review: Use Android Extensions. No need for findViewById
+            itemView.stepName.text = step.name
+            itemView.stepNeighborhood.text = step.neighborhood
+            itemView.stepMaterial.text = step.material
+            itemView.stepLength.text = step.length.toString()
+            itemView.stepImage.text = step.image
+            //new code
+            //setOnClickListener { listener(step) }
         }
     }
 }
