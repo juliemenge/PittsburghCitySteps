@@ -15,6 +15,8 @@ import kotlin.collections.ArrayList
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import kotlinx.android.synthetic.main.recyclerview_item_row.*
+import org.jetbrains.anko.toast
 
 class MainActivity : AppCompatActivity() {
 
@@ -49,23 +51,17 @@ class MainActivity : AppCompatActivity() {
                     val stepList = data.await()
 
                     //set up the recyclerview to display list of steps
-                    val adapter = RecyclerAdapter(stepList)
+                    //val adapter = RecyclerAdapter(stepList)
+                    val adapter = RecyclerAdapter(stepList) {toast(it.name)}
                     recyclerView.adapter = adapter
 
-                    //clicky code
-                    
-                    //end clicky code
                 }
             }
         }
 
-        //getting recyclerview from xml
-
-        // Review: Not needed. The Android extensions allow you reference components directly without needing findViewById
-        // val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-
         //adding a layoutmanager
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+
 
     }
 }
