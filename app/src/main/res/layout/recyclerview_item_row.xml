@@ -3,45 +3,34 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical"
-              android:paddingBottom="16dp">
+              android:paddingBottom="48dp">
 
     <TextView
         android:id="@+id/stepName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="TextView"/>
-
-    <TextView
-        android:id="@+id/stepNeighborhood"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="TextView"/>
+        android:text="TextView"
+        android:textColor="#337ab7"/>
 
     <TextView
         android:id="@+id/stepMaterial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"/>
+        android:text="TextView"
+        android:textColor="#337ab7"/>
 
     <TextView
         android:id="@+id/stepLength"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"/>
-
-    <TextView
-        android:id="@+id/stepImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:autoLink="web"
-        android:layout_weight="1"
-        android:text="TextView"/>
+        android:text="TextView"
+        android:textColor="#337ab7"/>
 
     <ImageView
         android:id="@+id/stepPicture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:adjustViewBounds="true"/>
 </LinearLayout>

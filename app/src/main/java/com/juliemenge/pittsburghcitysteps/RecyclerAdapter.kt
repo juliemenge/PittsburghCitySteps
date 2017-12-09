@@ -41,12 +41,13 @@ class RecyclerAdapter(val stepList: List<Step>,
         : RecyclerView.ViewHolder(itemView) {
 
         fun bindItems(step: Step) {
-            Picasso.with(itemView.context).load(step.image).into(itemView.stepPicture) //how to use this
+            Picasso.with(itemView.context).load(step.image).resize(500,500)
+                    .into(itemView.stepPicture) //how to use this
             itemView.stepName.text = step.name
-            itemView.stepNeighborhood.text = step.neighborhood
+            //itemView.stepNeighborhood.text = step.neighborhood
             itemView.stepMaterial.text = step.material
-            itemView.stepLength.text = step.length.toString()
-            itemView.stepImage.text = step.image
+            itemView.stepLength.text = step.length.toString() + " steps"
+            //itemView.stepImage.text = step.image
             itemView.setOnClickListener { itemClick(step) }
         }
 

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Pittsburgh City Steps</string>
+    <string name="attr_text">Licensed under CC BY. Retrieved from the Western Pennsylvania Regional Data Center.</string>
 </resources>

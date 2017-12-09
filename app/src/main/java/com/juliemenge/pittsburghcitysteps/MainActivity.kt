@@ -16,7 +16,9 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import kotlinx.android.synthetic.main.recyclerview_item_row.*
+import org.jetbrains.anko.AlertDialogBuilder
 import org.jetbrains.anko.toast
+import org.jetbrains.anko.alert
 
 class MainActivity : AppCompatActivity() {
 
@@ -51,8 +53,16 @@ class MainActivity : AppCompatActivity() {
                     val stepList = data.await()
 
                     //set up the recyclerview to display list of steps
+
                     //val adapter = RecyclerAdapter(stepList)
+                    //used this when there was no clicking
+
                     val adapter = RecyclerAdapter(stepList) {toast(it.name)} //what to do when the item is clicked - within the {}
+                    //used this to click and display name of step
+
+                    //val adapter = RecyclerAdapter(stepList) {alertDialogBuilder()} //what to do when the item is clicked - within the {}
+                    //display alert dialog on click - need to pass in it.image, probably, to display image somehow, start just with url
+
                     recyclerView.adapter = adapter
 
                 }
@@ -61,7 +71,16 @@ class MainActivity : AppCompatActivity() {
 
         //adding a layoutmanager
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+    }
 
+    //alert dialog to hopefully display an image on click
+    private fun alertDialogBuilder(): AlertDialogBuilder {
+        return alert("Testing alerts") {
+            title = "Alert"
+            positiveButton("Cool") { toast("Yess!!!") }
+            negativeButton("Never Ever") { }
+            neutralButton("I'll think about it")
+        }.show()
 
     }
 }
