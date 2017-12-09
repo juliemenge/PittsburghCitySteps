@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.recyclerview_item_row.view.*
 
 
@@ -40,6 +41,7 @@ class RecyclerAdapter(val stepList: List<Step>,
         : RecyclerView.ViewHolder(itemView) {
 
         fun bindItems(step: Step) {
+            Picasso.with(itemView.context).load(step.image).into(itemView.stepPicture) //how to use this
             itemView.stepName.text = step.name
             itemView.stepNeighborhood.text = step.neighborhood
             itemView.stepMaterial.text = step.material

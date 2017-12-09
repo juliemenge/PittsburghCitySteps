@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
 
                     //set up the recyclerview to display list of steps
                     //val adapter = RecyclerAdapter(stepList)
-                    val adapter = RecyclerAdapter(stepList) {toast(it.name)}
+                    val adapter = RecyclerAdapter(stepList) {toast(it.name)} //what to do when the item is clicked - within the {}
                     recyclerView.adapter = adapter
 
                 }
